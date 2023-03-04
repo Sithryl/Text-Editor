@@ -22,24 +22,27 @@ module.exports = () => {
         template: "./index.html",
         title: "JATE",
       }),
-      new InjectManifest({
-        swSrc: "./src/sw.js",
-        swDest: "service-worker.js",
-      }),
-      new MiniCssExtractPlugin(),
-      new WorkboxPlugin.GenerateSW(),
+
       new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
         name: "Just Another Text Editor",
         short_name: "JATE",
         description: "A browser app for taking notes",
         background_color: "#ffffff",
+        start_url: "/",
+        publicPath: "/",
         icons: [
           {
-            src: path.resolve("/assets/images/logo.png"),
-            sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
-            destination: path.join("assets", "images"),
+            src: path.resolve("src/images/logo.png"),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join("assets", "icons"),
           },
         ],
+      }),
+      new InjectManifest({
+        swSrc: "./src-sw.js",
+        swDest: "src-sw.js",
       }),
     ],
 
